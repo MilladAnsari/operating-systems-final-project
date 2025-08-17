@@ -18,11 +18,12 @@ Workload generation is **multi‑threaded** and models locality in file access p
 ## 📂 Project Structure
 ```
 .
-├── CPU.py        # Simulates CPU and thread scheduling
-├── File.py       # Represents files with start/end addresses
-├── Thread.py     # Simulates threads and weighted file selection
-├── MMU.py        # Memory management unit – implement your algorithms here
-├── main.py       # Entry point (to be created by user for running simulation)
+├── CPU.py           # Simulates CPU and thread scheduling
+├── File.py          # Represents files with start/end addresses
+├── Thread.py        # Simulates threads and weighted file selection
+├── MMU.py           # Memory management unit – implement your algorithms here
+├── main.py          # Entry point (to be created by user for running simulation)
+├── os-project.pdf   # Project description
 └── README.md
 ```
 
@@ -31,8 +32,8 @@ Workload generation is **multi‑threaded** and models locality in file access p
 ## ⚙️ Installation
 ```bash
 # Clone the repository
-git clone https://github.com/<your-username>/<repo-name>.git
-cd <repo-name>
+git clone https://github.com/MilladAnsari/operating-systems-final-project.git
+cd operating-systems-final-projec
 
 # Optional: Create a virtual environment
 python -m venv venv
