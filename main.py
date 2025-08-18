@@ -6,10 +6,11 @@ import random
 import matplotlib.pyplot as plt
 
 cpu = CPU()
-file_cnt = 8000
+file_cnt = 1024
+current = 0
 for _ in range(file_cnt):
     tah = random.randint(1, 16)
-    File(0, 4)
+    File(0, tah )
 for _ in range(32):
     cpu.AddThread(Thread())
 # print(t)
@@ -21,19 +22,19 @@ for _ in range(32):
 #     SC_TEMP.append(0)
 #     LRU2x_TEMP.append(0)
 mmu = MMU()
-fig, axs = plt.subplots(1, 3, figsize=(15, 35))
-fig.suptitle('Page Faults vs Page Size for Different Scenarios')
-for i in range(1):
-    mmu.resize_mem(4000000)
-    mmu.resize_page(4000)
+fig, axs = plt.subplots(10, 3, figsize=(15, 35))
+# fig.suptitle('Page Faults vs Page Size for Different Scenarios')
+for i in range(10):
+    mmu.resize_mem(4000)
+    mmu.resize_page(4)
     for case in range(3):
         if case % 2 == 0:
             mmu.set_policy('LRU')
             if case == 2:
-                mmu.resize_mem(8000000)
+                mmu.resize_mem(8000)
         else:
             mmu.set_policy('SECOND_CHANCE')
-        ss = 250
+        ss = 1
         page_faults = []
         page_sizes = []# اندازه‌های صفحه به بایت
         dc = dict()
@@ -44,14 +45,14 @@ for i in range(1):
             mmu.reset()
             cpu.reset()
             cpu.run(mmu)
-            page_faults.append(MMU.page_faults)
-            ss *= 2
+            page_faults.append(MMU.page_faults - 190)
+            ss += 1
             # axs[i, case].bar(ss, MMU.page_faults, width= 7, color='blue', alpha=0.7)
             # print('(', ss, ' ', MMU.page_faults, ')', end = ' ')
             # page_sizes = [512, 1024, 2048, 4096, 8192]  # اندازه‌های صفحه به بایت
             # page_faults = [100, 80, 60, 30, 10]  # تعداد page fault مربوط به هر اندازه صفحه
         # print()
-        axs[case].bar(page_sizes, page_faults, color='skyblue', edgecolor='black')
+        axs[i, case].bar(page_sizes, page_faults, color='skyblue', edgecolor='black')
     # print(i)
 
             # ایجاد هیستوگرام

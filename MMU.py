@@ -1,7 +1,7 @@
 class MMU:
     page_faults = 0
-    page_size = 4000
-    mem_size = 4000000
+    page_size = 4
+    mem_size = 4000
     policy = "LRU"
 
     def __init__(self, policy="LRU"):
@@ -76,6 +76,7 @@ class MMU:
         if self.policy == "LRU":
             self.page_usage.append(req)
         elif self.policy == "SECOND_CHANCE":
+            # print('u')
             self.page_queue.append(req)
             self.reference_bits[req] = 1
     def eviction_system(self):
@@ -88,6 +89,7 @@ class MMU:
                 self.free_places += 1
 
         elif self.policy == "SECOND_CHANCE":
+            # print('p')
             while self.page_queue:
                 page = self.page_queue.pop(0)
                 if self.reference_bits.get(page, 0) == 0:
