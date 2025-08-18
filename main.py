@@ -3,14 +3,77 @@ from File import File
 from CPU import CPU
 from Thread import Thread
 import random
+import matplotlib.pyplot as plt
+
 cpu = CPU()
-file_cnt = 2000
+file_cnt = 8000
 for _ in range(file_cnt):
     tah = random.randint(1, 16)
-    file = File(0, tah * 1024)
-for _ in range(64):
-    t = Thread()
-    cpu.AddThread(t)
+    File(0, 4)
+for _ in range(32):
+    cpu.AddThread(Thread())
+# print(t)
+# LRU_TEMP = []
+# SC_TEMP = []
+# LRU2x_TEMP = []
+# for _ in range(10):
+#     LRU_TEMP.append(0)
+#     SC_TEMP.append(0)
+#     LRU2x_TEMP.append(0)
+mmu = MMU()
+fig, axs = plt.subplots(1, 3, figsize=(15, 35))
+fig.suptitle('Page Faults vs Page Size for Different Scenarios')
+for i in range(1):
+    mmu.resize_mem(4000000)
+    mmu.resize_page(4000)
+    for case in range(3):
+        if case % 2 == 0:
+            mmu.set_policy('LRU')
+            if case == 2:
+                mmu.resize_mem(8000000)
+        else:
+            mmu.set_policy('SECOND_CHANCE')
+        ss = 250
+        page_faults = []
+        page_sizes = []# اندازه‌های صفحه به بایت
+        dc = dict()
+        for __ in range(10):
+            # print(ss)
+            mmu.resize_page(ss)
+            page_sizes.append(str(ss))
+            mmu.reset()
+            cpu.reset()
+            cpu.run(mmu)
+            page_faults.append(MMU.page_faults)
+            ss *= 2
+            # axs[i, case].bar(ss, MMU.page_faults, width= 7, color='blue', alpha=0.7)
+            # print('(', ss, ' ', MMU.page_faults, ')', end = ' ')
+            # page_sizes = [512, 1024, 2048, 4096, 8192]  # اندازه‌های صفحه به بایت
+            # page_faults = [100, 80, 60, 30, 10]  # تعداد page fault مربوط به هر اندازه صفحه
+        # print()
+        axs[case].bar(page_sizes, page_faults, color='skyblue', edgecolor='black')
+    # print(i)
+
+            # ایجاد هیستوگرام
+        # plt.bar(page_sizes, page_faults, width=300, color='blue', alpha=0.7)
+
+        # # افزودن عنوان و برچسب‌ها
+        # plt.title('Page Faults vs Page Size')
+        # plt.xlabel('Page Size (bytes)')
+        # plt.ylabel('Number of Page Faults')
+
+        # نمایش هیستوگرام
+        # plt.xticks(page_sizes)  # تنظیم برچسب‌های محور x
+        # plt.grid(axis='y')  # افزودن شبکه به محور y
+        # plt.show()
+            
+            
+# plt.subplots_adjust(wspace=0.4 * 5000, hspace=0.6 * 1000)
+# plt.tight_layout(pad=5.5 * 10)
+# تنظیم فاصله بین زیرنویس‌ها
+# plt.tight_layout(rect=[0, 0.03, 1, 0.95])
+plt.show()
+
 # print(len(cpu.list_thread))
 
 # print(File.number)

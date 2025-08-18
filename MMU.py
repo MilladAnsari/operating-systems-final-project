@@ -1,10 +1,11 @@
 class MMU:
     page_faults = 0
-    page_size = 4
-    mem_size = 4000
+    page_size = 4000
+    mem_size = 4000000
+    policy = "LRU"
 
     def __init__(self, policy="LRU"):
-        self.policy = policy.upper()
+        MMU.policy = policy.upper()
         self.mmap = [(-1, -1)] * (MMU.mem_size // MMU.page_size)
         self.free_places = MMU.mem_size // MMU.page_size
 
@@ -13,7 +14,7 @@ class MMU:
         self.reference_bits = {}
     
     def set_policy(self, policy):
-        self.policy = policy.upper()
+        MMU.policy = policy.upper()
     
     def resize_mem(self, sz):
         MMU.size = sz
@@ -59,6 +60,7 @@ class MMU:
             # MMU.page_faults += 1
 
             if self.free_places > 0:
+                # print(self.free_places)
                 index = self.mmap.index((-1, -1))
                 self.mmap[index] = req
                 self.free_places -= 1
@@ -68,6 +70,7 @@ class MMU:
                 index = self.mmap.index((-1, -1))
                 self.mmap[index] = req
                 self._update_structures(req)
+                self.free_places -= 1
 
     def _update_structures(self, req):
         if self.policy == "LRU":
@@ -79,6 +82,7 @@ class MMU:
         if self.policy == "LRU":
             if self.page_usage:
                 lru_page = self.page_usage.pop(0)
+                # self.page_usage.remove(lru_page)
                 index = self.mmap.index(lru_page)
                 self.mmap[index] = (-1, -1)
                 self.free_places += 1
