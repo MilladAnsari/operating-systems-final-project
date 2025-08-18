@@ -1,4 +1,3 @@
-from CPU import CPU
 from MMU import MMU
 
 
