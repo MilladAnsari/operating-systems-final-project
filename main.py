@@ -1,5 +1,4 @@
 from CPU import CPU
-from Thread import Thread
 from MMU import MMU
 
 
