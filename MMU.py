@@ -31,32 +31,40 @@ class MMU:
             elif self.policy == "SECOND_CHANCE":
                 self.reference_bits[request] = 1
             return "HIT"
-
         MMU.page_faults += 1
-
-        if self.free_places > 0:
-            index = self.mmap.index((-1, -1))
-            self.mmap[index] = (pid, page)
-            self.free_places -= 1
-
-            if self.policy == "LRU":
-                self.page_usage.append((pid, page))
-            elif self.policy == "SECOND_CHANCE":
-                self.page_queue.append((pid, page))
-                self.reference_bits[(pid, page)] = 1
-        else:
-            self.eviction_system()
-            index = self.mmap.index((-1, -1))
-            self.mmap[index] = (pid, page)
-
-            if self.policy == "LRU":
-                self.page_usage.append((pid, page))
-            elif self.policy == "SECOND_CHANCE":
-                self.page_queue.append((pid, page))
-                self.reference_bits[(pid, page)] = 1
-
+        self._load_with_neighbors(pid, page)
         return "PAGE_FAULT"
 
+    def _load_with_neighbors(self, pid, page):
+        pages_to_load = [page-1, page, page+1]
+
+        for p in pages_to_load:
+            if p < pid.starting_point or p > pid.ending_point:  
+                continue
+
+            req = (pid, p)
+            if self.search(req):
+                continue  
+
+            # MMU.page_faults += 1
+
+            if self.free_places > 0:
+                index = self.mmap.index((-1, -1))
+                self.mmap[index] = req
+                self.free_places -= 1
+                self._update_structures(req)
+            else:
+                self.eviction_system()
+                index = self.mmap.index((-1, -1))
+                self.mmap[index] = req
+                self._update_structures(req)
+
+    def _update_structures(self, req):
+        if self.policy == "LRU":
+            self.page_usage.append(req)
+        elif self.policy == "SECOND_CHANCE":
+            self.page_queue.append(req)
+            self.reference_bits[req] = 1
     def eviction_system(self):
         if self.policy == "LRU":
             if self.page_usage:
