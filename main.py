@@ -57,9 +57,9 @@ for i in range(10):
             TEMP[case][j] += page_faults[j] / 10
         axs[i, case].bar(page_sizes, page_faults, color='skyblue', edgecolor='black')
     # print(i)
-axs[10, 0].bar(['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'], TEMP[0], color='skyblue', edgecolor='black')
-axs[10, 1].bar(['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'], TEMP[1], color='skyblue', edgecolor='black')
-axs[10, 2].bar(['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'], TEMP[2], color='skyblue', edgecolor='black')
+axs[10, 0].bar(['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'], TEMP[0], color='red', edgecolor='black')
+axs[10, 1].bar(['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'], TEMP[1], color='red', edgecolor='black')
+axs[10, 2].bar(['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'], TEMP[2], color='red', edgecolor='black')
 
 
             # ایجاد هیستوگرام
