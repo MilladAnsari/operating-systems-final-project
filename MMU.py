@@ -14,7 +14,7 @@ class MMU:
 
     def reset(self):
         self.mmap = [(-1, -1)] * (MMU.mem_size // MMU.page_size)
-        self.page_faults = 0
+        MMU.page_faults = 0
         self.free_places = MMU.mem_size // MMU.page_size
         self.page_usage.clear()
         self.page_queue.clear()
@@ -82,4 +82,4 @@ class MMU:
         return request in self.mmap
 
     def __repr__(self):
-        return f"MMU(policy={self.policy}, mem={self.mmap}, page_faults={MMU.page_faults})"
+        return f"MMU(policy={self.policy}, page_faults={MMU.page_faults})"
