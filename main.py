@@ -10,4 +10,3 @@ for req in requests:
     print(req, "=>", mmu.handle_request(req))
 
 print(mmu)
-

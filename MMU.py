@@ -1,16 +1,16 @@
 class MMU:
     page_faults = 0
-    page_size = 4        
-    mem_size = 4000      
+    page_size = 4
+    mem_size = 4000
 
     def __init__(self, policy="LRU"):
         self.policy = policy.upper()
-        self.mmap = [(-1, -1)] * (MMU.mem_size // MMU.page_size) 
+        self.mmap = [(-1, -1)] * (MMU.mem_size // MMU.page_size)
         self.free_places = MMU.mem_size // MMU.page_size
 
-        self.page_usage = []       
-        self.page_queue = []       
-        self.reference_bits = {}   
+        self.page_usage = []
+        self.page_queue = []
+        self.reference_bits = {}
 
     def reset(self):
         self.mmap = [(-1, -1)] * (MMU.mem_size // MMU.page_size)

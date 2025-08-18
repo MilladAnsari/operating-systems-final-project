@@ -1,6 +1,4 @@
-from Thread import Thread
 from MMU import MMU
-import time
 
 class CPU:
     def __init__(self):
