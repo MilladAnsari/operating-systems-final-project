@@ -22,7 +22,7 @@ TEMP = [[0] * 10, [0] * 10, [0] * 10]
 #     SC_TEMP.append(0)
 #     LRU2x_TEMP.append(0)
 mmu = MMU()
-fig, axs = plt.subplots(11, 3, figsize=(15, 35))
+fig, axs = plt.subplots(1, 3, figsize=(15, 35))
 # fig.suptitle('Page Faults vs Page Size for Different Scenarios')
 for i in range(10):
     mmu.resize_mem(4000)
@@ -55,11 +55,11 @@ for i in range(10):
         # TEMP[case] += page_faults
         for j in range(10):
             TEMP[case][j] += page_faults[j] / 10
-        axs[i, case].bar(page_sizes, page_faults, color='skyblue', edgecolor='black')
+        # axs[i, case].bar(page_sizes, page_faults, color='skyblue', edgecolor='black')
     # print(i)
-axs[10, 0].bar(['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'], TEMP[0], color='red', edgecolor='black')
-axs[10, 1].bar(['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'], TEMP[1], color='red', edgecolor='black')
-axs[10, 2].bar(['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'], TEMP[2], color='red', edgecolor='black')
+axs[0].bar(['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'], TEMP[0], color='red', edgecolor='black')
+axs[1].bar(['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'], TEMP[1], color='red', edgecolor='black')
+axs[2].bar(['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'], TEMP[2], color='red', edgecolor='black')
 
 
             # ایجاد هیستوگرام
