@@ -11,7 +11,17 @@ class MMU:
         self.page_usage = []
         self.page_queue = []
         self.reference_bits = {}
-
+    
+    def set_policy(self, policy):
+        self.policy = policy.upper()
+    
+    def resize_mem(self, sz):
+        MMU.size = sz
+    
+    def resize_page(self, sz):
+        MMU.page_size = sz
+        self.reset()
+    
     def reset(self):
         self.mmap = [(-1, -1)] * (MMU.mem_size // MMU.page_size)
         MMU.page_faults = 0

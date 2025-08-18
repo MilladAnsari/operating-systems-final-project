@@ -7,3 +7,5 @@ class File:
         self.starting_point = start
         self.ending_point = end
         File.list_of_files.append(self)
+    def __repr__(self):
+            return f"{self.id + 1}"
